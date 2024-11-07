@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">MEQChallenge</string>
+
+    <string name="referenceDetected">Reference Object Detected</string>
+    <string name="referenceIncorrect">Reference Object Detected But Size Incorrect</string>
+    <string name="referenceNotDetected">Reference Object Not Detected</string>
+
+    <string name="detectedLabelName">Detect Object: %1$s</string>
+    <string name="detectedMissing">No Object Detected</string>
+
+    <string name="detectedSizeCm">Approx Size WxH in CM: %1$.2f: %2$.2f</string>
+    <string name="detectedSizeScale">Approx Size WxH Scale: %1$.2f: %2$.2f</string>
+</resources>
