@@ -65,7 +65,7 @@ class ObjectDetectorHelper(
         val results = objectDetector?.detect(tensorImage)
         inferenceTime = SystemClock.uptimeMillis() - inferenceTime
 
-        //Convert Detected List to UI object type
+        //Convert Detected List to UI object types
         val detectedObjs = results?.map { DetectedObject(
             it.categories.first().label,
             it.boundingBox.left,
@@ -74,6 +74,7 @@ class ObjectDetectorHelper(
             it.boundingBox.bottom,
         ) }
 
+        //Send results to UI
         objectDetectorListener?.onResults(
             detectedObjs,
             inferenceTime,

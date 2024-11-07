@@ -10,7 +10,7 @@ import androidx.core.content.ContextCompat
 import java.util.LinkedList
 import kotlin.math.max
 
-class OverlayView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
+class BoundingBoxDrawingView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
     private var results: List<DetectedObject>? = LinkedList()
     private var boxPaint = Paint()
 

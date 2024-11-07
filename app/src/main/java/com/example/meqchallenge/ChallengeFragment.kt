@@ -52,6 +52,7 @@ class ChallengeFragment : Fragment(),  ObjectDetectorHelper. DetectorListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //Configure Camera and detectors
         objectDetectorHelper = ObjectDetectorHelper(
             context = requireContext(),
             objectDetectorListener = this)
@@ -62,8 +63,8 @@ class ChallengeFragment : Fragment(),  ObjectDetectorHelper. DetectorListener {
            initCamera()
         }
 
+        //Configure Compose UI Components
         binding!!.composeView.setContent {
-            //Configure Compose UI Components
             MyApplicationTheme {
                 ConfigureComposeUIComponents()
             }
@@ -73,7 +74,7 @@ class ChallengeFragment : Fragment(),  ObjectDetectorHelper. DetectorListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //Request Permissions
+        //Request Camera Permissions
         val requestCodePermissions = 10
         val requiredPermissions = arrayOf(Manifest.permission.CAMERA)
 
@@ -97,9 +98,7 @@ class ChallengeFragment : Fragment(),  ObjectDetectorHelper. DetectorListener {
     private fun initCamera() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
         cameraProviderFuture.addListener({
-                // CameraProvider
                 cameraProvider = cameraProviderFuture.get()
-                // Build and bind the camera use cases
                 bindCameraUseCases()
             },
             ContextCompat.getMainExecutor(requireContext())
@@ -119,7 +118,6 @@ class ChallengeFragment : Fragment(),  ObjectDetectorHelper. DetectorListener {
                 .setTargetRotation(binding!!.viewFinder.display.rotation)
                 .build()
 
-        // ImageAnalysis. Using RGBA 8888 to match how our models work
         imageAnalyzer =
             ImageAnalysis.Builder()
                 .setTargetRotation(binding!!.viewFinder.display.rotation)
@@ -146,8 +144,6 @@ class ChallengeFragment : Fragment(),  ObjectDetectorHelper. DetectorListener {
         cameraProvider.unbindAll()
 
         try {
-            // A variable number of use-cases can be passed here -
-            // camera provides access to CameraControl & CameraInfo
             camera = cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageAnalyzer)
 
             // Attach the viewfinder's surface provider to preview use case
@@ -220,8 +216,6 @@ class ChallengeFragment : Fragment(),  ObjectDetectorHelper. DetectorListener {
             val widthWithinEstimates = referenceWidth > (dpScaleWidth - estimateBound) && referenceWidth < (dpScaleWidth + estimateBound)
             val heightWithinEstimates = referenceHeight > (dpScaleHeight - estimateBound) && referenceHeight < (dpScaleHeight + estimateBound)
             val referenceWithinEstimates = widthWithinEstimates && heightWithinEstimates
-
-            Log.d("TAG", "ref " + widthWithinEstimates + ": " + heightWithinEstimates)
 
             viewModel.referenceSizeCorrect.postValue(referenceWithinEstimates)
 
